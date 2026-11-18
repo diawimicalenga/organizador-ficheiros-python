@@ -1,28 +1,28 @@
 from pathlib import Path
 
-pasta = Path(".")
+pasta = Path.cwd()
 
-ficheiros = [item for item in pasta.iterdir() if item.is_file()]
+ficheiros = [f for f in pasta.iterdir() if f.is_file()]
 
 print("=== ORGANIZADOR DE FICHEIROS ===")
 
-for ficheiro in ficheiros:
-    print(ficheiro.name)
+if len(ficheiros) == 0:
+    print("Não existem ficheiros na pasta.")
+else:
+    for ficheiro in ficheiros:
+        print("Nome:", ficheiro.name)
+        print("Extensão:", ficheiro.suffix)
+        print("Tamanho:", ficheiro.stat().st_size, "bytes")
 
-print(f"\nTotal de ficheiros: {len(ficheiros)}")
+        if ficheiro.suffix == ".py":
+            print("Tipo: Ficheiro Python")
 
-contagem = {}
+        elif ficheiro.suffix == ".txt":
+            print("Tipo: Ficheiro de Texto")
 
-for ficheiro in ficheiros:
-    extensao = ficheiro.suffix
+        elif ficheiro.suffix == ".csv":
+            print("Tipo: Ficheiro CSV")
 
-    if extensao in contagem:
-        contagem[extensao] += 1
-    else:
-        contagem[extensao] = 1
+        print("----------------------")
 
-print("\n=== CONTAGEM POR EXTENSÃO ===")
-
-for extensao, quantidade in contagem.items():
-    print(f"{extensao}: {quantidade}")
-    
+    print("Total de ficheiros:", len(ficheiros))
